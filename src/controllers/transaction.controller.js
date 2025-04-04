@@ -18,12 +18,12 @@ exports.createTransaction = async (req, res) => {
       merchantTransactionId,
       amount,
       currency: currency,
-      successUrl: `http://localhost:5173/flight/reviewbooking/ValidatingPayment/${reservationId}`,
-      cancelUrl: `http://localhost:8000/api/transaction/cancel/${reservationId}`,
-      errorUrl: `http://localhost:5173/ticket/failed/${reservationId}`,
-      // successUrl: `https://firstflightfrontendren.vercel.app/flight/reviewbooking/ValidatingPayment/${reservationId}`,
+      // successUrl: `http://localhost:5173/flight/reviewbooking/ValidatingPayment/${reservationId}`,
       // cancelUrl: `http://localhost:8000/api/transaction/cancel/${reservationId}`,
-      // errorUrl: `https://firstflightfrontendren.vercel.app/ticket/failed/${reservationId}`,
+      // errorUrl: `http://localhost:5173/ticket/failed/${reservationId}`,
+      successUrl: `https://ff-frontend-git-main-shaanrahman123s-projects.vercel.app/flight/reviewbooking/ValidatingPayment/${reservationId}`,
+      cancelUrl: `http://localhost:8000/api/transaction/cancel/${reservationId}`,
+      errorUrl: `https://ff-frontend-git-main-shaanrahman123s-projects.vercel.app/ticket/failed/${reservationId}`,
     };
 
     // Prepare basic auth header value
