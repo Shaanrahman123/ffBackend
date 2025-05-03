@@ -4,6 +4,11 @@ const User = require("../models/user.model");
 const { api } = require("../common/const");
 const Buffer = require("buffer").Buffer;
 
+const usernameTill = process.env.PAYMENT_TILL_USERNAME;
+const passwordTill = process.env.PAYMENT_TILL_PASSWORD;
+const signatureTtill = process.env.PAYMENT_TILL_SIGNATURE;
+const frontendUrl = process.env.FRONTENDURL;
+
 exports.createTransaction = async (req, res) => {
   try {
     const userId = req?.user?.id || "6789f4438c60265589a9b470"; // Assuming the JWT contains the user ID in the `_id` field
@@ -18,17 +23,14 @@ exports.createTransaction = async (req, res) => {
       merchantTransactionId,
       amount,
       currency: currency,
-      // successUrl: `http://localhost:5173/flight/reviewbooking/ValidatingPayment/${reservationId}`,
-      // cancelUrl: `http://localhost:8000/api/transaction/cancel/${reservationId}`,
-      // errorUrl: `http://localhost:5173/ticket/failed/${reservationId}`,
-      successUrl: `https://ff-frontend-git-main-shaanrahman123s-projects.vercel.app/flight/reviewbooking/ValidatingPayment/${reservationId}`,
+      successUrl: `${frontendUrl}/flight/reviewbooking/ValidatingPayment/${reservationId}`,
       cancelUrl: `http://localhost:8000/api/transaction/cancel/${reservationId}`,
-      errorUrl: `https://ff-frontend-git-main-shaanrahman123s-projects.vercel.app/ticket/failed/${reservationId}`,
+      errorUrl: `${frontendUrl}/ticket/failed/${reservationId}`,
     };
 
     // Prepare basic auth header value
-    const username = "First_Flight_API_Dev";
-    const password = "M36W7RNCuOL^i9pmUZ2PlVAlLoiHM!";
+    const username = usernameTill;
+    const password = passwordTill;
     const authString = `${username}:${password}`; // Combine username and password
     const authHeader = "Basic " + Buffer.from(authString).toString("base64"); // Base64 encode the string
 
@@ -36,8 +38,7 @@ exports.createTransaction = async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: authHeader,
-        "X-Signature":
-          "UG2ohD9zXaC8401/fKW2PpnW3CKtIw6VlagvDoxbycfl0OnSkdnbohKtmU4vHskrio6+OaxSFo7ubzrVLf/aZg==",
+        "X-Signature": signatureTtill,
       },
     };
     // console.log(api.paymentGateWayUrl)

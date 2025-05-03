@@ -39,7 +39,9 @@ const enquiry = async (req, res) => {
 // Get all testimonials
 const getAllEnquiry = async (req, res) => {
   try {
-    const enquiry = await Enquiry.find();
+
+    const sorted = { createdAt: -1 };
+    const enquiry = await Enquiry.find().sort(sorted);
     if (enquiry.length === 0) {
       return res.status(404).json({ message: "No enquiry found" });
     }

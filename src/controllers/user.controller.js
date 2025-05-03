@@ -81,6 +81,14 @@ exports.userLogin = async (req, res) => {
         message: "User not found.",
       });
     }
+
+    if(user.email===""){
+      res.status(200).send({
+        statusCode: 200,
+        message: "user login successfully.",
+      });
+    }
+
     // Generate OTP (6-digit random number)
     const otp = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit OTP
     // console.log(otp, "otp in the login ");

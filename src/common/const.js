@@ -11,14 +11,15 @@ exports.credentials = {
 };
 
 const baseURL=process.env.TP_BASEURL;
-const paymentbaseurl=process.env.PAYMENT_BASEURL;
-const paymentapikey=process.env.PAYMENT_APIKEY;
+const paymentbaseurl=process.env.PAYMENT_TILL_BASEURL;
+const paymentapikey=process.env.PAYMENT_TILL_APIKEY;
+const tokenURL = process.env.TP_TOKEN_URL;
 
 
 exports.api = {
-  //Common Token
+  //Common Token 
   tokenURL:
-    "https://oauth.pp.travelport.com/oauth/oauth20/token",
+    `${tokenURL}/oauth/oauth20/token`,
     //search url
     flightSearchUrl:
     `${baseURL}/catalog/search/catalogproductofferings`,

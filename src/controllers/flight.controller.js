@@ -41,6 +41,7 @@ exports.oAuthToken = async (req, res) => {
   }
 };
 
+
 //searchFlightOneWay
 exports.searchFlightOneWay = async (req, res) => {
   try {
@@ -63,19 +64,13 @@ exports.searchFlightOneWay = async (req, res) => {
     // console.log(response?.data?.CatalogProductOfferingsResponse?.Result?.Error);
     if (response.data.CatalogProductOfferingsResponse.Result.Error) {
       const errorMessage =
-        response?.data?.CatalogProductOfferingsResponse?.Result?.Error[0]
-          ?.Message;
+        response?.data?.CatalogProductOfferingsResponse?.Result?.Error[0]?.Message;
 
       return res.status(200).send({
         statusCode: 200,
         message: errorMessage,
       });
     }
-    console.log(
-      response?.data?.CatalogProductOfferingsResponse?.ReferenceList[1]
-        ?.Product[0]?.PassengerFlight,
-      "response"
-    );
 
     let responseData = response?.data;
 
@@ -87,8 +82,7 @@ exports.searchFlightOneWay = async (req, res) => {
     function helperFlight(code) {
       let itemFlight;
       const responseFlight =
-        responseData?.CatalogProductOfferingsResponse?.ReferenceList?.[0]
-          ?.Flight;
+        responseData?.CatalogProductOfferingsResponse?.ReferenceList?.[0]?.Flight;
       responseFlight?.forEach((item) => {
         if (item.id === code) {
           itemFlight = item;
@@ -101,8 +95,7 @@ exports.searchFlightOneWay = async (req, res) => {
     function helperProduct(code) {
       let itemProduct;
       const responseProduct =
-        responseData?.CatalogProductOfferingsResponse?.ReferenceList?.[1]
-          ?.Product;
+        responseData?.CatalogProductOfferingsResponse?.ReferenceList?.[1]?.Product;
       responseProduct?.forEach((item, index) => {
         if (item?.id === code) {
           itemProduct = item;
@@ -153,22 +146,21 @@ exports.searchFlightOneWay = async (req, res) => {
                 };
               }
             ),
-            orderId: item?.id,
+            orderId:item?.id
           };
 
           responseReformed.push(tempObj);
         });
       }
     );
+    
 
-    const CatalogProductOfferingsId =
-      responseData?.CatalogProductOfferingsResponse?.CatalogProductOfferings
-        ?.Identifier?.value;
-    // console.log("responseReformed",responseData?.CatalogProductOfferingsResponse?.CatalogProductOfferings?.Identifier?.value);
+    const CatalogProductOfferingsId=responseData?.CatalogProductOfferingsResponse?.CatalogProductOfferings?.Identifier?.value;
+    // console.log("responseReformed",responseData?.CatalogProductOfferingsResponse?.CatalogProductOfferings?.Identifier?.value); 
     res.status(200).send({
       statusCode: 200,
       message: "Search flight successfully.",
-      CatalogProductOfferingsId: CatalogProductOfferingsId,
+      CatalogProductOfferingsId:CatalogProductOfferingsId,
       data: responseReformed,
     });
   } catch (err) {
@@ -178,6 +170,7 @@ exports.searchFlightOneWay = async (req, res) => {
     res.status(500).send({ statusCode: 500, message: errorMsg });
   }
 };
+
 
 //searchFlightReturn
 
@@ -202,8 +195,7 @@ exports.searchFlightReturn = async (req, res) => {
     // console.log(response?.data?.CatalogProductOfferingsResponse?.Result?.Error);
     if (response.data.CatalogProductOfferingsResponse.Result.Error) {
       const errorMessage =
-        response?.data?.CatalogProductOfferingsResponse?.Result?.Error[0]
-          ?.Message;
+        response?.data?.CatalogProductOfferingsResponse?.Result?.Error[0]?.Message;
 
       return res.status(200).send({
         statusCode: 200,
@@ -221,8 +213,7 @@ exports.searchFlightReturn = async (req, res) => {
     function helperFlight(code) {
       let itemFlight;
       const responseFlight =
-        responseData?.CatalogProductOfferingsResponse?.ReferenceList?.[0]
-          ?.Flight;
+        responseData?.CatalogProductOfferingsResponse?.ReferenceList?.[0]?.Flight;
       responseFlight?.forEach((item) => {
         if (item.id === code) {
           itemFlight = item;
@@ -235,8 +226,7 @@ exports.searchFlightReturn = async (req, res) => {
     function helperProduct(code) {
       let itemProduct;
       const responseProduct =
-        responseData?.CatalogProductOfferingsResponse?.ReferenceList?.[1]
-          ?.Product;
+        responseData?.CatalogProductOfferingsResponse?.ReferenceList?.[1]?.Product;
       responseProduct?.forEach((item, index) => {
         if (item?.id === code) {
           itemProduct = item;
@@ -287,22 +277,21 @@ exports.searchFlightReturn = async (req, res) => {
                 };
               }
             ),
-            orderId: item?.id,
+            orderId:item?.id
           };
 
           responseReformed.push(tempObj);
         });
       }
     );
+    
 
-    const CatalogProductOfferingsId =
-      responseData?.CatalogProductOfferingsResponse?.CatalogProductOfferings
-        ?.Identifier?.value;
-    // console.log("responseReformed",responseData?.CatalogProductOfferingsResponse?.CatalogProductOfferings?.Identifier?.value);
+    const CatalogProductOfferingsId=responseData?.CatalogProductOfferingsResponse?.CatalogProductOfferings?.Identifier?.value;
+    // console.log("responseReformed",responseData?.CatalogProductOfferingsResponse?.CatalogProductOfferings?.Identifier?.value); 
     res.status(200).send({
       statusCode: 200,
       message: "Search flight successfully.",
-      CatalogProductOfferingsId: CatalogProductOfferingsId,
+      CatalogProductOfferingsId:CatalogProductOfferingsId,
       data: responseReformed,
     });
   } catch (err) {
@@ -406,6 +395,8 @@ exports.addOffer = async (req, res) => {
       config
     );
 
+    
+
     res.status(200).send({
       statusCode: 200,
       message: "add offer flight successfully.",
@@ -464,7 +455,7 @@ exports.commitReservation = async (req, res) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
+        "Accept": "application/json",
         Authorization: `Bearer ${token}`,
         XAUTH_TRAVELPORT_ACCESSGROUP: `${credentials.XAUTH_TRAVELPORT_ACCESSGROUP}`,
         "Content-Version": `${credentials.TP_ACCEPT_VERSION}`,

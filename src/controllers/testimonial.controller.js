@@ -29,7 +29,8 @@ const addTestimonial = async (req, res) => {
 // Get all testimonials
 const getAllTestimonials = async (req, res) => {
   try {
-    const testimonials = await Testimonial.find();
+   const sorted = { createdAt: -1 };
+    const testimonials = await Testimonial.find().sort(sorted);
     if (testimonials.length === 0) {
       return res.status(404).json({ message: "No testimonials found" });
     }
