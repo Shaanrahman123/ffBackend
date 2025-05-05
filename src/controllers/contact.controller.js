@@ -39,6 +39,7 @@ const enquiry = async (req, res) => {
 // Get all testimonials
 const getAllEnquiry = async (req, res) => {
   try {
+
     const sorted = { createdAt: -1 };
     const enquiry = await Enquiry.find().sort(sorted);
     if (enquiry.length === 0) {

@@ -3,7 +3,7 @@ const TopRoute = require("../models/topFlightRoute.model");
 // Add top route flights
 const addTopRouteFlight = async (req, res) => {
   const { tripData } = req.body;
-  console.log(tripData);
+  // console.log(tripData);
   try {
     if (!Array.isArray(tripData)) {
       return res.status(400).json({ message: "tripData must be an array" });
